@@ -41,8 +41,11 @@ def process_payment(payment_id, credit_card_data):
         "payment_id": update_result["payment_id"],
         "is_paid": update_result["is_paid"]
     }
-    # TODO: appelez la méthode correctement
-    update_order(0, False)
+    requests.put(
+        'http://api-gateway:8080/store-manager-api/orders',
+        json={"order_id": update_result["order_id"], "is_paid": True},
+        headers={"Content-Type": "application/json"}
+    )
 
     return result
     
